@@ -4,7 +4,9 @@ import { Segment, Header, Grid, Button } from 'semantic-ui-react'
 const HeaderContainer = (props) => {
 	return(
 		<Header as='h1'>
-		{props.loggedin ?
+		{props.loggedin 
+			 ?
+			<Segment>
 			<Grid.Row>
 				<Grid divided="vertically">
 					<Grid.Row columns={5} divided>
@@ -25,6 +27,7 @@ const HeaderContainer = (props) => {
 					</Grid.Row>
 				</Grid>
 			</Grid.Row>
+			</Segment>
 			:
 			<Segment>
 				<Header.Content>Postcard</Header.Content>
