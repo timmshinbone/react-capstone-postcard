@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 
 import LoginRegisterForm from './LoginRegisterForm'
+import HeaderContainer from './HeaderContainer'
 
 class App extends React.Component {
     constructor(){
@@ -71,7 +72,11 @@ class App extends React.Component {
     render(){
         return (
             <div className="App">
-                <h1> Postcard App </h1>
+                <HeaderContainer 
+                    loggedin={this.state.loggedin} 
+                    loggedInUsername={this.state.loggedInUsername} 
+                    logout={this.logout}
+                />
                 <LoginRegisterForm 
                     login={this.login}
                     register={this.register}
