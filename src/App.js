@@ -3,6 +3,7 @@ import './App.css';
 
 import LoginRegisterForm from './LoginRegisterForm'
 import HeaderContainer from './HeaderContainer'
+import UserContainer from './UserContainer'
 
 class App extends React.Component {
     constructor(){
@@ -77,10 +78,17 @@ class App extends React.Component {
                     loggedInUsername={this.state.loggedInUsername} 
                     logout={this.logout}
                 />
-                <LoginRegisterForm 
-                    login={this.login}
-                    register={this.register}
-                />
+                { this.state.loggedin ? 
+                    <UserContainer
+                        loggedin={this.state.loggedin}
+                        loggedInUsername={this.state.loggedInUsername}
+                    />
+                : 
+                    <LoginRegisterForm 
+                        login={this.login} 
+                        register={this.register} 
+                    />
+                }
             </div>
         );
     }
