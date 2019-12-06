@@ -67,10 +67,11 @@ class App extends React.Component {
         this.setState({
             loggedin: false,
             loggedInUsername: null
+
         })
     }
-
     render(){
+        console.log(this.state.loggedInUsername)
         return (
             <div className="App">
                 <HeaderContainer 

@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Stage, Layer } from 'react-konva';
 import Konva from 'konva';
 import { Segment, Button } from 'semantic-ui-react';
+import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
+import { FreeLine } from "./FreeLine";
 
 function PostcardContainer() {
 	const [rectangles, setRectangles] = useState([]);
@@ -28,6 +29,14 @@ function PostcardContainer() {
 		setShapes(shs);
 	};
 
+	const drawLine = () => {
+		FreeLine(stageEl.current.getStage(), layerEl.current);
+	};
+
+	const eraseLine = () => {
+		FreeLine(stageEl.current.getStage(), layerEl.current, "erase");
+	}
+
 	//place all other shape + drawing components here
 	const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -50,6 +59,12 @@ function PostcardContainer() {
 			<Segment><p>drawing tools</p></Segment>
 			<Button basic color="blue" onClick={addRectangle}>
 				Rectangle
+			</Button>
+			<Button basic color="blue" onClick={drawLine}>
+				Draw
+			</Button>
+			<Button basic color="blue" onClick={eraseLine}>
+				Erase
 			</Button>
 			<Button basic color="red" onClick={undo}>
 				Undo

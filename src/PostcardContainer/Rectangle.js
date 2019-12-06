@@ -38,6 +38,7 @@ const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
 						y: node.y(),
 						width: node.width() * scaleX,
 						height: node.height() * scaleY,
+						rotationSnaps: [0, 45, 90, 135, 180, 270] 
 					});
 				}}
 			/>
