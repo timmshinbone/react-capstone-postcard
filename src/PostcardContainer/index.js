@@ -1,19 +1,93 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
 import Konva from 'konva';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Button } from 'semantic-ui-react';
+import Rectangle from "./Rectangle";
 
-class PostcardContainer extends Component {
-	render(){
-		return(
-			<Segment>
-				<Stage width={window.innerWidth} height={window.innerHeight}>
-					<Layer>
-					</Layer>
-				</Stage>
-			</Segment>
-		)
-	}
+function PostcardContainer() {
+	const [rectangles, setRectangles] = useState([]);
+	//set other shapes + line drawing above this
+	const [selectedId, selectShape] = useState(null);
+	const [shapes, setShapes] = useState([]);
+	const [, updateState] = React.useState();
+	const stageEl = React.createRef();
+	const layerEl = React.createRef();
+
+	const addRectangle = () => {
+		const rect = {
+			x: 150,
+			y: 150,
+			width: 100,
+			height: 100,
+			fill: "green",
+			id: `rect${rectangles.length + 1}`,
+		};
+		const rects = rectangles.concat([rect]);
+		setRectangles(rects);
+		const shs = shapes.concat([`rect${rectangles.length + 1}`]);
+		setShapes(shs);
+	};
+
+	//place all other shape + drawing components here
+	const forceUpdate = React.useCallback(() => updateState({}), []);
+
+	const undo = () => {
+		const lastId = shapes[shapes.length - 1];
+		//rectangle undo
+		let index = rectangles.findIndex(r => r.id === lastId);
+		if(index !== -1) {
+			rectangles.splice(index, 1);
+			setRectangles(rectangles);
+		}
+
+		//place undos for other shapes above this
+		shapes.pop();
+		setShapes(shapes);
+		forceUpdate();
+	};
+	return(
+		<Segment className="postcard">
+			<Segment><p>drawing tools</p></Segment>
+			<Button basic color="blue" onClick={addRectangle}>
+				Rectangle
+			</Button>
+			<Button basic color="red" onClick={undo}>
+				Undo
+			</Button>
+			<Stage 
+				width={window.innerWidth * .75} 
+				height={window.innerHeight * .75}
+				ref={stageEl}
+				onMouseDown={e => {
+					const clickedOnEmpty = e.target === e.target.getStage();
+					if(clickedOnEmpty) {
+						selectShape(null);
+					}
+				}}
+			>
+				<Layer ref={layerEl}>
+					{rectangles.map((rect, i) => {
+						return(
+							<Rectangle
+								key={i}
+								shapeProps={rect}
+								isSelected={rect.id === selectedId}
+								onSelect={() => {
+									selectShape(rect.id);
+								}}
+								onChange={newAttrs => {
+									const rects = rectangles.slice();
+									rects[i] = newAttrs;
+									setRectangles(rects);
+								}}
+							/>
+						)
+					})}
+				</Layer>
+			</Stage>
+		</Segment>
+	)
 }
+
 
 export default PostcardContainer

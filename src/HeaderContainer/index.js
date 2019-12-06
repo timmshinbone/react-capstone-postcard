@@ -5,7 +5,7 @@ const HeaderContainer = (props) => {
 	return(
 		<Header as='h1'>
 		{props.loggedin 
-			 ?
+			?
 			<Segment>
 			<Grid.Row>
 				<Grid divided="vertically">
