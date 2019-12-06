@@ -54,6 +54,32 @@ function PostcardContainer() {
 		setShapes(shapes);
 		forceUpdate();
 	};
+	// const stage = stageEl.current.getStage()
+	const savePcardData = async () => {
+		console.log(stageEl)
+		const stageData = stageEl.current.toDataURL()
+		console.log(stageData);
+
+		const stageDataURL = {
+			drawing: stageData,
+			message: "test message"
+		}
+
+		const response = await fetch(process.env.REACT_APP_API_URL + '/api/v1/postcards/', {
+			method: 'POST',
+			credentials: 'include',
+			body: JSON.stringify(stageDataURL),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		const parsedPcardResponse = await response.json()
+		console.log(parsedPcardResponse);
+		
+	} 
+
+	// stage.toJSON()
+
 	return(
 		<Segment className="postcard">
 			<Segment><p>drawing tools</p></Segment>
@@ -100,6 +126,9 @@ function PostcardContainer() {
 					})}
 				</Layer>
 			</Stage>
+			<Button basic color="green" onClick={savePcardData}>
+				Save
+			</Button>
 		</Segment>
 	)
 }
