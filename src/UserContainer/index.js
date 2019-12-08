@@ -8,10 +8,10 @@ class UserContainer extends Component {
 		super(props);
 
 		this.state = {
-			postcards: [],
-			friends: [],
 			users: [],
-			inbox: [],
+			postcards: [],
+			friendships: [],
+			transactions: [],
 			newPostcard: false,
 			viewFriends: false,
 			viewHistory: false,
@@ -21,6 +21,9 @@ class UserContainer extends Component {
 
 	componentDidMount(){
 		this.getUsers();
+		this.getPostcards();
+		this.getFriendships();
+		this.getTransactions();
 	}
 
 	getUsers = async () => {
@@ -33,7 +36,6 @@ class UserContainer extends Component {
 				}
 			});
 			const parsedUsers = await users.json();
-			console.log(parsedUsers.data)
 			this.setState({
 				users: parsedUsers.data
 			});
@@ -41,8 +43,63 @@ class UserContainer extends Component {
 			console.log(err);
 		}
 	}
+
+	getPostcards = async () => {
+		try {
+			const pCards = await fetch(process.env.REACT_APP_API_URL + '/api/v1/postcards/', {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const parsedPCards = await pCards.json();
+			this.setState({
+				postcards: parsedPCards.data
+			});
+		} catch (err) {
+			console.log(err);
+		}		
+	}
+
+	getFriendships = async () => {
+		try {
+			const fShips = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/', {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const parsedFShips = await fShips.json();
+			this.setState({
+				friendships: parsedFShips.data
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	getTransactions = async () => {
+		try {
+			const transactions = await fetch(process.env.REACT_APP_API_URL + '/api/v1/transactions/', {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const parsedTrans = await transactions.json();
+			this.setState({
+				transactions: parsedTrans.data
+			});
+		} catch (err) {
+			console.log(err);
+		}			
+	}
+
 	render(props){
-		console.log(this.state.users, '<---this is users')
+		console.log(this.state.friendships, "<--this is friendships");
 		return(
 			<Segment>
 				<h1>This is the current user's home screen</h1>
