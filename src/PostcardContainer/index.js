@@ -82,7 +82,8 @@ function PostcardContainer() {
 
 	return(
 		<Segment className="postcard">
-			<Segment><p>drawing tools</p></Segment>
+			<Segment>
+			<p>drawing tools</p>
 			<Button basic color="blue" onClick={addRectangle}>
 				Rectangle
 			</Button>
@@ -95,6 +96,8 @@ function PostcardContainer() {
 			<Button basic color="red" onClick={undo}>
 				Undo
 			</Button>
+			</Segment>
+			<Segment>
 			<Stage 
 				width={window.innerWidth * .75} 
 				height={window.innerHeight * .75}
@@ -126,6 +129,7 @@ function PostcardContainer() {
 					})}
 				</Layer>
 			</Stage>
+			</Segment>
 			<Button basic color="green" onClick={savePcardData}>
 				Save
 			</Button>

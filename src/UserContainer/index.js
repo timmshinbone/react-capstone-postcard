@@ -10,6 +10,7 @@ class UserContainer extends Component {
 		this.state = {
 			postcards: [],
 			friends: [],
+			users: [],
 			inbox: [],
 			newPostcard: false,
 			viewFriends: false,
@@ -17,7 +18,31 @@ class UserContainer extends Component {
 			viewInbox: false
 		}
 	}
+
+	componentDidMount(){
+		this.getUsers();
+	}
+
+	getUsers = async () => {
+		try {
+			const users = await fetch(process.env.REACT_APP_API_URL + '/api/v1/users/', {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			const parsedUsers = await users.json();
+			console.log(parsedUsers.data)
+			this.setState({
+				users: parsedUsers.data
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
 	render(props){
+		console.log(this.state.users, '<---this is users')
 		return(
 			<Segment>
 				<h1>This is the current user's home screen</h1>
