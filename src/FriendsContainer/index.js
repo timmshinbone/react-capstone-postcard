@@ -6,7 +6,8 @@ function FriendsContainer(props){
 	const currentFriendships = props.friends.filter((friends) => 
 		friends.user_one.username === props.loggedInUsername
 		||
-		friends.user_two.username === props.loggedInUsername)
+		friends.user_two.username === props.loggedInUsername
+	)
 	// console.log(currentFriendships, "<--currentFriendships");
 	//display friends where status is 1(accepted)
 	const friends = currentFriendships.filter((req) => req.status === 1)
@@ -30,6 +31,26 @@ function FriendsContainer(props){
 		)
 	})
 	//display pending requests 
+	const requests = currentFriendships.filter((req) => 
+		req.user_two.username === props.loggedInUsername && req.status === 0)
+	
+	const requestList = requests.map((req) => {
+		return(
+			<List.Item key={req.id}>
+				<List.Header>{req.user_one.username} wants to be friends!</List.Header>
+				<Button.Group size="mini">
+					<Button size="mini" basic color="green">
+						<Icon name="thumbs up" color="green"/>
+					</Button>
+					<Button.Or />
+					<Button size="mini" basic color="red">
+						<Icon name="thumbs down" color="red"/>
+					</Button>
+				</Button.Group>
+			</List.Item>
+		)
+	})
+
 	//allow for modal to add friends
 
 	return(
@@ -43,6 +64,16 @@ function FriendsContainer(props){
 			</Segment>
 		:
 			<h3>You don't have any friends yet</h3>
+		}
+		{requests.length > 0 ?
+			<Segment>
+				<Header>Requests</Header>
+				<List>
+					{ requestList }
+				</List>
+			</Segment>
+		:
+			<h3>No pending friend requests</h3>
 		}
 		</Segment>
 	)
