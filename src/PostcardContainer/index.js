@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Konva from 'konva';
-import { Segment, Button } from 'semantic-ui-react';
+import { Segment, Button, Icon } from 'semantic-ui-react';
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
 import { FreeLine } from "./FreeLine";
@@ -85,16 +85,16 @@ function PostcardContainer() {
 			<Segment>
 			<p>drawing tools</p>
 			<Button basic color="blue" onClick={addRectangle}>
-				Rectangle
+				<Icon name="square" color="blue"/>Rectangle
 			</Button>
 			<Button basic color="blue" onClick={drawLine}>
-				Draw
+				<Icon name="pencil alternate" color="blue"/>Draw
 			</Button>
 			<Button basic color="blue" onClick={eraseLine}>
-				Erase
+				<Icon name="eraser" color="blue"/>Erase
 			</Button>
 			<Button basic color="red" onClick={undo}>
-				Undo
+				<Icon name="undo alternate" color="red"/>Undo
 			</Button>
 			</Segment>
 			<Segment>
@@ -131,7 +131,10 @@ function PostcardContainer() {
 			</Stage>
 			</Segment>
 			<Button basic color="green" onClick={savePcardData}>
-				Save
+				<Icon name="save outline" color="green"/> Save
+			</Button>
+			<Button basic color="blue">
+				<Icon name="paper plane outline" color="blue"/> Send
 			</Button>
 		</Segment>
 	)

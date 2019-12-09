@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Grid } from 'semantic-ui-react'
 
 import PostcardContainer from '../PostcardContainer'
+import FriendsContainer from '../FriendsContainer'
 
 class UserContainer extends Component {
 	constructor(props){
@@ -100,11 +101,21 @@ class UserContainer extends Component {
 
 	render(props){
 		console.log(this.state.friendships, "<--this is friendships");
+		console.log(this.state.postcards, "<--this is postcards");
+		console.log(this.state.transactions, "<--this is transactions");
 		return(
 			<Segment>
 				<h1>This is the current user's home screen</h1>
 				<PostcardContainer/>
-				<p>Click the 'FRIENDS' button to display 'List of Friends'</p>
+				{this.state.friendships.length > 0 ?
+					<FriendsContainer
+						users={this.state.users}
+						friends={this.state.friendships}
+						loggedInUsername={this.props.loggedInUsername}
+					/>
+				:
+					<h1>waiting for friends</h1>
+				}
 				<p>Click the 'HISTORY' button to display 'List of transactions'</p>
 				<p>Click the 'INBOX' button to display 'Unread Postcards'</p>
 			</Segment>
