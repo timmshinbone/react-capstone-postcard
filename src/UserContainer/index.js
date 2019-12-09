@@ -121,6 +121,7 @@ class UserContainer extends Component {
 				<ViewUsersList
 					users={this.state.users}
 					loggedInUsername={this.props.loggedInUsername}
+					currentUser={this.props.currentUser}
 					friends={this.state.friendships}
 				/>
 			</Segment>

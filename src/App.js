@@ -11,7 +11,11 @@ class App extends React.Component {
 
         this.state = {
             loggedin: false,
-            loggedInUsername: null
+            loggedInUsername: null,
+            currentUser: {
+                id: '',
+                username: ''
+            }
         }
     }
     login = async (loginInfo) => {
@@ -28,7 +32,12 @@ class App extends React.Component {
         if(parsedLoginResponse.status.code === 200) {
             this.setState({
                 loggedin: true,
-                loggedInUsername: parsedLoginResponse.data.username
+                loggedInUsername: parsedLoginResponse.data.username,
+                currentUser: {
+                    id: parsedLoginResponse.data.id,
+                    username: parsedLoginResponse.data.username
+                }
+
             })
         } else {
             console.log("Login Failed");
@@ -83,6 +92,7 @@ class App extends React.Component {
                     <UserContainer
                         loggedin={this.state.loggedin}
                         loggedInUsername={this.state.loggedInUsername}
+                        currentUser={this.state.currentUser}
                     />
                 : 
                     <LoginRegisterForm 
