@@ -34,16 +34,59 @@ function FriendsContainer(props){
 	const requests = currentFriendships.filter((req) => 
 		req.user_two.username === props.loggedInUsername && req.status === 0)
 	
+	//accept friend
+	const acceptFriend = async () => {
+		const specificReq = requests.find(reqFound => requests.id === requestList.id)
+		const id = specificReq.id
+		console.log("this is id", id);
+		try{
+			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + id, {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify({
+					status: 1
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+		}
+		catch (err) {
+			console.log(err);
+		}
+	}
+	//deny friend
+	const denyFriend = async () => {
+		const specificReq = requests.find(reqFound => requests.id === requestList.id)
+		const id = specificReq.id
+		console.log("this is id", id);
+		try{
+			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + id, {
+				method: 'PUT',
+				credentials: 'include',
+				body: JSON.stringify({
+					status: 2
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+		}
+		catch (err) {
+			console.log(err);
+		}
+	}
+
 	const requestList = requests.map((req) => {
 		return(
 			<List.Item key={req.id}>
 				<List.Header>{req.user_one.username} wants to be friends!</List.Header>
 				<Button.Group size="mini">
-					<Button size="mini" basic color="green">
+					<Button size="mini" basic color="green" onClick={acceptFriend}>
 						<Icon name="thumbs up" color="green"/>
 					</Button>
 					<Button.Or />
-					<Button size="mini" basic color="red">
+					<Button size="mini" basic color="red" onClick={denyFriend}>
 						<Icon name="thumbs down" color="red"/>
 					</Button>
 				</Button.Group>
@@ -51,7 +94,6 @@ function FriendsContainer(props){
 		)
 	})
 
-	//allow for modal to add friends
 
 	return(
 		<Segment>
