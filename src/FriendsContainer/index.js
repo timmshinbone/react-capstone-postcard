@@ -35,9 +35,8 @@ function FriendsContainer(props){
 		req.user_two.username === props.loggedInUsername && req.status === 0)
 	
 	//accept friend
-	const acceptFriend = async () => {
-		const specificReq = requests.find(reqFound => requests.id === requestList.id)
-		const id = specificReq.id
+	const acceptFriend = async (id) => {
+
 		console.log("this is id", id);
 		try{
 			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + id, {
@@ -56,9 +55,8 @@ function FriendsContainer(props){
 		}
 	}
 	//deny friend
-	const denyFriend = async () => {
-		const specificReq = requests.find(reqFound => requests.id === requestList.id)
-		const id = specificReq.id
+	const denyFriend = async (id) => {
+
 		console.log("this is id", id);
 		try{
 			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + id, {
@@ -82,11 +80,11 @@ function FriendsContainer(props){
 			<List.Item key={req.id}>
 				<List.Header>{req.user_one.username} wants to be friends!</List.Header>
 				<Button.Group size="mini">
-					<Button size="mini" basic color="green" onClick={acceptFriend}>
+					<Button size="mini" basic color="green" onClick={() => acceptFriend(req.id)}>
 						<Icon name="thumbs up" color="green"/>
 					</Button>
 					<Button.Or />
-					<Button size="mini" basic color="red" onClick={denyFriend}>
+					<Button size="mini" basic color="red" onClick={() => denyFriend(req.id)}>
 						<Icon name="thumbs down" color="red"/>
 					</Button>
 				</Button.Group>

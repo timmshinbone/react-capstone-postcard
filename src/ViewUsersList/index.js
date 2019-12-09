@@ -7,6 +7,7 @@ function ViewUsersList(props){
 	console.log(nonLoggedInUsers, "<-this is nonLoggedInUsers");
 	
 	console.log(props.currentUser, "this is current user");
+	
 	const friendRequest = async (userSelected) => {
 		
 		console.log(userSelected, "userSelected")
