@@ -2,8 +2,18 @@ import React from 'react'
 import { Segment, Header, Grid, Button, Card, Image } from 'semantic-ui-react'
 
 const HistoryContainer = (props) => {
+	//get the current user's postcards
+	const userPCards = props.postcards.filter((p) => {
+		if(p.creator.id === props.currentUser.id){
+			return true
+		} else {
+			return false
+		}
+	})
 
-	const pCards = props.postcards.map(pCard => {
+	console.log(userPCards, "this is userPCards");
+
+	const pCards = userPCards.map(pCard => {
 		return(
 			<Card key={pCard.id}>
 				<Image src={pCard.drawing} wrapped ui={false} />
@@ -19,9 +29,12 @@ const HistoryContainer = (props) => {
 	})
 
 	return(
-		<Grid colums={2}>
-			{pCards}
-		</Grid>
+		<Segment>
+			<Header>{props.currentUser.username}'s Creations</Header>
+			<Grid colums={3}>
+				{pCards}
+			</Grid>
+		</Segment>
 	)
 }
 
