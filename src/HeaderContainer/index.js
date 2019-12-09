@@ -13,7 +13,7 @@ const HeaderContainer = (props) => {
 						<Grid.Column width={1} />
 						<Grid.Column width={4} >
 							<Header.Content>{props.loggedInUsername}</Header.Content>
-							<Button basic onClick={props.logout}>Log Out</Button>
+							<Button size='mini' pointing='left' basic onClick={props.logout}>Log Out</Button>
 						</Grid.Column>
 						<Grid.Column width={5} >
 							<Button basic >POSTCARD</Button>

@@ -7,7 +7,7 @@ function ViewUsersList(props){
 	console.log(nonLoggedInUsers, "<-this is nonLoggedInUsers");
 	
 	console.log(props.currentUser, "this is current user");
-	
+
 	const friendRequest = async (userSelected) => {
 		
 		console.log(userSelected, "userSelected")
@@ -33,7 +33,7 @@ function ViewUsersList(props){
 		||
 		friends.user_two.username === props.loggedInUsername)
 
-	console.log(currentFriendships, "<--currentFriendships");
+	// console.log(currentFriendships, "<--currentFriendships");
 	
 
 	// console.log(yetToBeFriended, "<-yetToBeFriended");
@@ -50,12 +50,14 @@ function ViewUsersList(props){
 			return false
 		}
 	})
-
+	// cont addedfriends = ([friended, setFriended])
 	const showUnfriended = yetToBeFriended.map((user) => {
 		return(
-			<Grid.Column key={user.id}>			
-				<Header>{user.username}</Header>
-				<Button size="mini" icon="plus" color="green" onClick={() => friendRequest(user.id)}/>
+			<Grid.Column key={user.id}>	
+				<Segment>		
+					<Header>{user.username}</Header>
+					<Button size="mini" icon="plus" color="green" onClick={() => friendRequest(user.id)}/>
+				</Segment>
 			</Grid.Column>
 		)
 	})

@@ -54,7 +54,7 @@ class LoginRegisterForm extends React.Component{
 							this.state.action === 'register'
 							?
 							<React.Fragment>
-								<Label basic >Email:</Label>
+								<Label basic pointing="below">Email:</Label>
 								<Form.Input
 									type="email"
 									name="email"
@@ -65,14 +65,14 @@ class LoginRegisterForm extends React.Component{
 							:
 							null
 						}
-						<Label basic >Username:</Label>
+						<Label basic pointing="below">Username:</Label>
 						<Form.Input
 							type="username"
 							name="username"
 							value={this.state.username}
 							onChange={this.handleChange}							
 						/>
-						<Label basic >Password:</Label>
+						<Label basic pointing="below">Password:</Label>
 						<Form.Input
 							type="password"
 							name="password"

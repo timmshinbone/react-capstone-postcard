@@ -4,6 +4,7 @@ import { Segment, Grid } from 'semantic-ui-react'
 import PostcardContainer from '../PostcardContainer'
 import FriendsContainer from '../FriendsContainer'
 import ViewUsersList from '../ViewUsersList'
+import HistoryContainer from '../HistoryContainer'
 
 class UserContainer extends Component {
 	constructor(props){
@@ -116,13 +117,17 @@ class UserContainer extends Component {
 				:
 					<h1>waiting for friends</h1>
 				}
-				<p>Click the 'HISTORY' button to display 'List of transactions'</p>
 				<p>Click the 'INBOX' button to display 'Unread Postcards'</p>
 				<ViewUsersList
 					users={this.state.users}
 					loggedInUsername={this.props.loggedInUsername}
 					currentUser={this.props.currentUser}
 					friends={this.state.friendships}
+				/>
+				<HistoryContainer
+					postcards={this.state.postcards}
+					users={this.state.users}
+					currentUser={this.props.currentUser}
 				/>
 			</Segment>
 		)
