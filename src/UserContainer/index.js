@@ -100,7 +100,6 @@ class UserContainer extends Component {
 	}
 
 	render(props){
-		console.log(this.state.friendships, "<--this is friendships");
 		console.log(this.state.postcards, "<--this is postcards");
 		console.log(this.state.transactions, "<--this is transactions");
 		return(

@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Icon, Header, Button } from 'semantic-ui-react';
+import { Segment, List, Icon, Header, Button } from 'semantic-ui-react';
 
 function FriendsContainer(props){
 	// get a list of friendships for the current user
@@ -7,10 +7,10 @@ function FriendsContainer(props){
 		friends.user_one.username === props.loggedInUsername
 		||
 		friends.user_two.username === props.loggedInUsername)
-	console.log(currentFriendships, "<--currentFriendships");
+	// console.log(currentFriendships, "<--currentFriendships");
 	//display friends where status is 1(accepted)
 	const friends = currentFriendships.filter((req) => req.status === 1)
-	console.log(friends, "<-This is friends");
+	// console.log(friends, "<-This is friends");
 
 	const friendsNames = friends.reduce((arr, person) => {
 		if(person.user_one.username !== props.loggedInUsername){
@@ -21,10 +21,10 @@ function FriendsContainer(props){
 			return arr
 		}
 	}, [])
-	console.log(friendsNames, '<--this is friendsNames');
+	// console.log(friendsNames, '<--this is friendsNames');
 	const friendList = friendsNames.map((fren) => {
 		return(
-			<List.Item key={fren.id}>
+			<List.Item key={fren}>
 				<List.Header><Icon name='user outline'/>{fren}</List.Header>
 			</List.Item>
 		)
@@ -33,9 +33,18 @@ function FriendsContainer(props){
 	//allow for modal to add friends
 
 	return(
-		<List>
-			{ friendList }
-		</List>
+		<Segment>
+		{friendList.length > 0 ?
+			<Segment>
+				<Header>Friends</Header>
+				<List>
+					{ friendList }
+				</List>
+			</Segment>
+		:
+			<h3>You don't have any friends yet</h3>
+		}
+		</Segment>
 	)
 }
 
