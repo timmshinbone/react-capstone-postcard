@@ -24,7 +24,6 @@ class UserContainer extends Component {
 
 	componentDidMount(){
 		this.getUsers();
-		this.getPostcards();
 		this.getFriendships();
 		this.getTransactions();
 	}
