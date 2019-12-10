@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Grid, Button, Card, Image, Icon } from 'semantic-ui-react'
+import { Segment, Header, Grid, Button, Card, Image, Icon, Dropdown } from 'semantic-ui-react'
 
 
 class HistoryContainer extends Component {
@@ -49,11 +49,21 @@ class HistoryContainer extends Component {
 		this.setState({
 			userPCards: userPCards
 		})
-		console.log(userPCards, "this is userPCards");
+		// console.log(userPCards, "this is userPCards");
+		console.log(this.friends, "this is this.friends in user");
 	}
-	//send postcard
+	
+	setFriendOptions(){
+		const friendOpts = this.props.friends.map((f) => {
+			return ({
+				key: f.id,
+				text: f.username,
+				value: f.id
+			})
+		})
+	}
 
-	showPcards(){
+	showPcards(props){
 		const pCards = this.state.userPCards.map(pCard => {
 			return(
 				<Grid key={pCard.id}>
@@ -68,6 +78,14 @@ class HistoryContainer extends Component {
 	      					<Button basic color="blue">
 								<Icon name="paper plane outline" color="blue" key={pCard.id}/> Send
 							</Button>
+							<span>
+							Send to: 
+							<Dropdown key={pCard.id}
+								inline
+								options={this.friends}
+								placeholder='friends'
+							/>
+							</span>
 	    				</Card.Content>
 					</Card>
 				</Grid>

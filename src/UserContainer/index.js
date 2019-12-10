@@ -15,6 +15,7 @@ class UserContainer extends Component {
 			users: [],
 			friendships: [],
 			transactions: [],
+			acceptedFriends: [],
 			newPostcard: false,
 			viewFriends: false,
 			viewHistory: false,
@@ -62,6 +63,7 @@ class UserContainer extends Component {
 		} catch (err) {
 			console.log(err);
 		}
+		this.getAcceptedFriends();
 	}
 
 	getTransactions = async () => {
@@ -80,6 +82,34 @@ class UserContainer extends Component {
 		} catch (err) {
 			console.log(err);
 		}			
+	}
+
+	getAcceptedFriends(props){
+		console.log(this.state.friendships, "this.state.friendships in getAcceptedFriends");
+		console.log(this.props.loggedInUsername, "this.state.loggedInUsername in getAcceptedFriends")
+		const currentFriendships = this.state.friendships.filter((friend) => 
+			friend.user_one.username === this.props.loggedInUsername
+			||
+			friend.user_two.username === this.props.loggedInUsername
+		)
+		
+		//display friends where status is 1(accepted)
+		const acceptedFriends = currentFriendships.filter((req) => req.status === 1)
+		
+		const friends = acceptedFriends.reduce((arr, person) => {
+			if(person.user_one.username !== this.props.loggedInUsername){
+				return arr.concat(person.user_one)
+			} else if(person.user_two.username !== this.props.loggedInUsername){
+				return arr.concat(person.user_two)
+			} else {
+				return arr
+			}
+		}, [])
+		
+		this.setState({
+			acceptedFriends: friends
+		})
+		console.log(this.state.acceptedFriends, 'this.state.acceptedFriends in user');
 	}
 
 	render(props){
@@ -105,11 +135,16 @@ class UserContainer extends Component {
 					currentUser={this.props.currentUser}
 					friends={this.state.friendships}
 				/>
-				<HistoryContainer
-					postcards={this.state.postcards}
-					users={this.state.users}
-					currentUser={this.props.currentUser}
-				/>
+				{this.state.acceptedFriends.length > 0 ?
+					<HistoryContainer
+						postcards={this.state.postcards}
+						friends={this.state.acceptedFriends}
+						currentUser={this.props.currentUser}
+					/>
+				:
+					<p>waiting for friends</p>
+
+				}
 				<InboxContainer
 					transactions={this.state.transactions}
 					currentUser={this.props.currentUser}

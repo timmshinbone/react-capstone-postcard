@@ -8,10 +8,10 @@ function FriendsContainer(props){
 		||
 		friends.user_two.username === props.loggedInUsername
 	)
-	// console.log(currentFriendships, "<--currentFriendships");
+	
 	//display friends where status is 1(accepted)
 	const friends = currentFriendships.filter((req) => req.status === 1)
-	// console.log(friends, "<-This is friends");
+	// console.log(currentFriendships, "<--this is currentFriendships in FriendsContainer");
 
 	const friendsNames = friends.reduce((arr, person) => {
 		if(person.user_one.username !== props.loggedInUsername){

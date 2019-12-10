@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Icon, Header, Button, Popup, Segment, Grid	} from 'semantic-ui-react'
+import { Header, Button, Segment, Grid	} from 'semantic-ui-react'
 
 function ViewUsersList(props){
 	
