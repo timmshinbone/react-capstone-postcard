@@ -85,8 +85,7 @@ class UserContainer extends Component {
 	}
 
 	getAcceptedFriends(props){
-		console.log(this.state.friendships, "this.state.friendships in getAcceptedFriends");
-		console.log(this.props.loggedInUsername, "this.state.loggedInUsername in getAcceptedFriends")
+		
 		const currentFriendships = this.state.friendships.filter((friend) => 
 			friend.user_one.username === this.props.loggedInUsername
 			||
@@ -109,7 +108,6 @@ class UserContainer extends Component {
 		this.setState({
 			acceptedFriends: friends
 		})
-		console.log(this.state.acceptedFriends, 'this.state.acceptedFriends in user');
 	}
 
 	render(props){
