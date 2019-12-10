@@ -13,7 +13,6 @@ class UserContainer extends Component {
 
 		this.state = {
 			users: [],
-			postcards: [],
 			friendships: [],
 			transactions: [],
 			newPostcard: false,
@@ -46,24 +45,6 @@ class UserContainer extends Component {
 		} catch (err) {
 			console.log(err);
 		}
-	}
-
-	getPostcards = async () => {
-		try {
-			const pCards = await fetch(process.env.REACT_APP_API_URL + '/api/v1/postcards/', {
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-			const parsedPCards = await pCards.json();
-			this.setState({
-				postcards: parsedPCards.data
-			});
-		} catch (err) {
-			console.log(err);
-		}		
 	}
 
 	getFriendships = async () => {

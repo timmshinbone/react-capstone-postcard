@@ -15,7 +15,7 @@ const InboxContainer = (props) => {
 
 	const inbox = userInbox.map(item => {
 		return(
-			<Grid >
+			<Grid key={item.id}>
 				<Card key={item.id}>
 					<Image src={item.postcard.drawing} wrapped ui={false} />
     				<Card.Content>
