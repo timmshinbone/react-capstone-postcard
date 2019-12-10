@@ -11,6 +11,8 @@ const HistoryContainer = (props) => {
 		}
 	})
 
+	//send postcard
+
 	console.log(userPCards, "this is userPCards");
 
 	const pCards = userPCards.map(pCard => {
