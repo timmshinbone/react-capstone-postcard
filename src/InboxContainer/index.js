@@ -11,7 +11,7 @@ const InboxContainer = (props) => {
 		}
 	})
 
-	console.log(userInbox, "this is userInbox");
+	// console.log(userInbox, "this is userInbox");
 
 	const inbox = userInbox.map(item => {
 		return(

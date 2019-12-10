@@ -4,13 +4,13 @@ import { Header, Button, Segment, Grid	} from 'semantic-ui-react'
 function ViewUsersList(props){
 	
 	const nonLoggedInUsers = props.users.filter((user) => user.username !== props.loggedInUsername)
-	console.log(nonLoggedInUsers, "<-this is nonLoggedInUsers");
+	// console.log(nonLoggedInUsers, "<-this is nonLoggedInUsers");
 	
-	console.log(props.currentUser, "this is current user");
+	// console.log(props.currentUser, "this is current user");
 
 	const friendRequest = async (userSelected) => {
 		
-		console.log(userSelected, "userSelected")
+		// console.log(userSelected, "userSelected")
 		try{
 			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + props.currentUser.id + "/" + userSelected, {
 				method: 'POST',

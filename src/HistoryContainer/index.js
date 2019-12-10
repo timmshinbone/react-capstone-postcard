@@ -10,7 +10,8 @@ class HistoryContainer extends Component {
 		this.state = {
 			postcards: [],
 			userPCards: [],
-			pCardsView: []
+			pCardsView: [],
+			receiver: null
 		}
 	}
 
@@ -50,7 +51,7 @@ class HistoryContainer extends Component {
 			userPCards: userPCards
 		})
 		// console.log(userPCards, "this is userPCards");
-		console.log(this.friends, "this is this.friends in user");
+		// console.log(this.friends, "this is this.friends in user");
 	}
 	
 	getFriendOptions(){
@@ -61,6 +62,31 @@ class HistoryContainer extends Component {
 				value: f.id
 			})
 		})
+	}
+	handleChange = (e, value) => {
+		this.setState({
+			receiver: value.value
+		})
+	}
+	
+	sendPostCard = async (postcard, receiver) => {
+		try{
+			const sendPCardResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/transactions/' + postcard + '/' + this.state.receiver, {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify({
+					postcard: postcard,
+					receiver: receiver
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+		const parsedResponse = await sendPCardResponse.json();
+		}
+		catch (err) {
+			console.log(err);
+		}
 	}
 
 	showPcards(props){
@@ -75,7 +101,7 @@ class HistoryContainer extends Component {
 							<Card.Description>
 	       						{pCard.message}
 	      					</Card.Description>
-	      					<Button basic color="blue">
+	      					<Button basic color="blue" onClick={() => this.sendPostCard(pCard.id, this.state.receiver)}>
 								<Icon name="paper plane outline" color="blue" key={pCard.id}/> Send
 							</Button>
 							<span>
@@ -84,6 +110,8 @@ class HistoryContainer extends Component {
 								inline
 								options={this.getFriendOptions()}
 								placeholder='friends'
+								closeOnChange
+								onChange={this.handleChange}
 							/>
 							</span>
 	    				</Card.Content>
@@ -92,12 +120,14 @@ class HistoryContainer extends Component {
 			)
 		})
 	}
+
 	render(props){
 		return(
 			<Segment>
 				<Grid.Column width={2}/>
 				<Header>{this.props.currentUser.username}'s creations</Header>
-				<Grid colums={3}>
+				<Grid.Column width={2}/>
+				<Grid columns={3}>
 					{this.showPcards()}
 				</Grid>
 
