@@ -53,8 +53,8 @@ class HistoryContainer extends Component {
 		console.log(this.friends, "this is this.friends in user");
 	}
 	
-	setFriendOptions(){
-		const friendOpts = this.props.friends.map((f) => {
+	getFriendOptions(){
+		return this.props.friends.map((f) => {
 			return ({
 				key: f.id,
 				text: f.username,
@@ -64,7 +64,7 @@ class HistoryContainer extends Component {
 	}
 
 	showPcards(props){
-		const pCards = this.state.userPCards.map(pCard => {
+		return this.state.userPCards.map(pCard => {
 			return(
 				<Grid key={pCard.id}>
 					<Card key={pCard.id}>
@@ -79,10 +79,10 @@ class HistoryContainer extends Component {
 								<Icon name="paper plane outline" color="blue" key={pCard.id}/> Send
 							</Button>
 							<span>
-							Send to: 
+							Send to:  
 							<Dropdown key={pCard.id}
 								inline
-								options={this.friends}
+								options={this.getFriendOptions()}
 								placeholder='friends'
 							/>
 							</span>
@@ -91,9 +91,6 @@ class HistoryContainer extends Component {
 				</Grid>
 			)
 		})
-		this.setState({
-			pCardsView: pCards
-		})
 	}
 	render(props){
 		return(
@@ -101,7 +98,7 @@ class HistoryContainer extends Component {
 				<Grid.Column width={2}/>
 				<Header>{this.props.currentUser.username}'s creations</Header>
 				<Grid colums={3}>
-					{this.state.pCardsView}
+					{this.showPcards()}
 				</Grid>
 
 			</Segment>
