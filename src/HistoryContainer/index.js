@@ -15,25 +15,29 @@ const HistoryContainer = (props) => {
 
 	const pCards = userPCards.map(pCard => {
 		return(
-			<Card key={pCard.id}>
-				<Image src={pCard.drawing} wrapped ui={false} />
-    			<Card.Content>
-      				<Card.Header>Created By: {pCard.creator.username}</Card.Header>
-      				<Card.Meta>{pCard.date}</Card.Meta>
-      				<Card.Description>
-        				{pCard.message}
-      				</Card.Description>
-    			</Card.Content>
-			</Card>
+			<Grid >
+				<Card key={pCard.id}>
+					<Image src={pCard.drawing} wrapped ui={false} />
+    				<Card.Content>
+      					<Card.Header>Created By: {pCard.creator.username}</Card.Header>
+      					<Card.Meta>{pCard.date}</Card.Meta>
+						<Card.Description>
+       						{pCard.message}
+      					</Card.Description>
+    				</Card.Content>
+				</Card>
+			</Grid>
 		)
 	})
 
 	return(
 		<Segment>
-			<Header>{props.currentUser.username}'s Creations</Header>
+			<Grid.Column width={2}/>
+			<Header>{props.currentUser.username}'s creations</Header>
 			<Grid colums={3}>
 				{pCards}
 			</Grid>
+
 		</Segment>
 	)
 }
