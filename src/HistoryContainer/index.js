@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Header, Grid, Button, Card, Image } from 'semantic-ui-react'
+import { Segment, Header, Grid, Button, Card, Image, Icon } from 'semantic-ui-react'
 
 const HistoryContainer = (props) => {
 	//get the current user's postcards
@@ -24,6 +24,9 @@ const HistoryContainer = (props) => {
 						<Card.Description>
        						{pCard.message}
       					</Card.Description>
+      					<Button basic color="blue">
+							<Icon name="paper plane outline" color="blue"/> Send
+						</Button>
     				</Card.Content>
 				</Card>
 			</Grid>

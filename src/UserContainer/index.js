@@ -5,6 +5,7 @@ import PostcardContainer from '../PostcardContainer'
 import FriendsContainer from '../FriendsContainer'
 import ViewUsersList from '../ViewUsersList'
 import HistoryContainer from '../HistoryContainer'
+import InboxContainer from '../InboxContainer'
 
 class UserContainer extends Component {
 	constructor(props){
@@ -127,6 +128,10 @@ class UserContainer extends Component {
 				<HistoryContainer
 					postcards={this.state.postcards}
 					users={this.state.users}
+					currentUser={this.props.currentUser}
+				/>
+				<InboxContainer
+					transactions={this.state.transactions}
 					currentUser={this.props.currentUser}
 				/>
 			</Segment>

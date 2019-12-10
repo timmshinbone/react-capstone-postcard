@@ -134,7 +134,7 @@ function PostcardContainer() {
 				<Icon name="save outline" color="green"/> Save
 			</Button>
 			<Button basic color="blue">
-				<Icon name="paper plane outline" color="blue"/> Send
+				<Icon name="dot circle outline" color="blue"/> Update
 			</Button>
 		</Segment>
 	)
