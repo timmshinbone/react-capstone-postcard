@@ -16,10 +16,7 @@ class UserContainer extends Component {
 			friendships: [],
 			transactions: [],
 			acceptedFriends: [],
-			newPostcard: false,
-			viewFriends: false,
-			viewHistory: false,
-			viewInbox: false
+			viewPage: ""
 		}
 	}
 
@@ -109,6 +106,30 @@ class UserContainer extends Component {
 			acceptedFriends: friends
 		})
 	}
+	showPostcard = (e) => {
+		e.preventDefault()
+		this.setState({
+			viewPage: 'postcard'
+		})
+	}
+	showInbox = (e) => {
+		e.preventDefault()
+		this.setState({
+			viewPage: 'inbox'
+		})
+	}
+	showHistory = (e) => {
+		e.preventDefault()
+		this.setState({
+			viewPage: 'history'
+		})
+	}
+	showFriends = (e) => {
+		e.preventDefault()
+		this.setState({
+			viewPage: 'friends'
+		})
+	}
 
 	render(props){
 		// console.log(this.state.postcards, "<--this is postcards");
@@ -116,42 +137,62 @@ class UserContainer extends Component {
 		return(
 			<Segment>
 				<Grid.Row>
-					<Button basic >POSTCARD</Button>
-					<Button basic >HISTORY</Button>
-					<Button basic >FRIENDS</Button>
-					<Button basic >INBOX</Button>
+					<Button basic color='olive' onClick={this.showPostcard}>POSTCARD</Button>
+					<Button basic color='blue' onClick={this.showHistory}>HISTORY</Button>
+					<Button basic color='teal' onClick={this.showFriends}>FRIENDS</Button>
+					<Button basic color='violet' onClick={this.showInbox}>INBOX</Button>
 				</Grid.Row>
-				<PostcardContainer/>
-				{this.state.friendships.length > 0 ?
-					<FriendsContainer
-						users={this.state.users}
-						friends={this.state.friendships}
-						loggedInUsername={this.props.loggedInUsername}
-					/>
-				:
-					<h1>waiting for friends</h1>
+				{
+					this.state.viewPage === 'postcard' ?
+						<PostcardContainer/>
+					:
+					null
 				}
-				<p>Click the 'INBOX' button to display 'Unread Postcards'</p>
-				<ViewUsersList
-					users={this.state.users}
-					loggedInUsername={this.props.loggedInUsername}
-					currentUser={this.props.currentUser}
-					friends={this.state.friendships}
-				/>
-				{this.state.acceptedFriends.length > 0 ?
-					<HistoryContainer
-						postcards={this.state.postcards}
-						friends={this.state.acceptedFriends}
-						currentUser={this.props.currentUser}
-					/>
-				:
-					<p>waiting for friends</p>
+				{
+					this.state.viewPage === 'friends' ?
 
+						this.state.friendships.length > 0 ?
+							<Segment>
+								<FriendsContainer
+									users={this.state.users}
+									friends={this.state.friendships}
+									loggedInUsername={this.props.loggedInUsername}
+								/>
+								<ViewUsersList
+									users={this.state.users}
+									loggedInUsername={this.props.loggedInUsername}
+									currentUser={this.props.currentUser}
+									friends={this.state.friendships}
+								/>
+							</Segment>
+						:
+							<h1>waiting for friends</h1>
+						
+					:
+					null
 				}
-				<InboxContainer
-					transactions={this.state.transactions}
-					currentUser={this.props.currentUser}
-				/>
+				{
+					this.state.viewPage === 'history' ?
+						this.state.acceptedFriends.length > 0 ?
+							<HistoryContainer
+								postcards={this.state.postcards}
+								friends={this.state.acceptedFriends}
+								currentUser={this.props.currentUser}
+							/>
+						:
+							<p>waiting for friends</p>
+					:
+					null
+				}
+				{
+					this.state.viewPage === 'inbox' ?
+						<InboxContainer
+							transactions={this.state.transactions}
+							currentUser={this.props.currentUser}
+						/>
+					:
+					null
+				}
 			</Segment>
 		)
 	}

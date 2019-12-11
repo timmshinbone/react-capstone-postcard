@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Konva from 'konva';
-import { Segment, Button, Icon, Form, Menu, Dropdown } from 'semantic-ui-react';
+import { Segment, Button, Icon, Form, Menu, Dropdown, Grid } from 'semantic-ui-react';
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
 // import { FreeLine } from "./FreeLine";
@@ -187,10 +187,10 @@ function PostcardContainer() {
 					closeOnChange
 					onChange={handleBrushSizeChange}
 				/>
-				<Button size='mini' basic color="blue" onClick={drawLine}>
+				<Button size='mini' basic color="orange" onClick={drawLine}>
 					<Icon size='small' name="pencil alternate" color="blue"/>draw
 				</Button>
-				<Button size="mini" basic color="blue" onClick={eraseLine}>
+				<Button size="mini" basic color="orange" onClick={eraseLine}>
 					<Icon size="small" name="eraser" color="blue"/>erase
 				</Button>
 			</span>
@@ -235,23 +235,24 @@ function PostcardContainer() {
 				</Layer>
 			</Stage>
 			</Segment>
-			<Form size='mini' onSubmit={handleMessageSubmit} >
-				<Form.Input inline
-					label='message'
-					control='input'
-					placeholder='type your message here...'
-					value={message}
-					onChange={e => setMessage(e.target.value)}
-				/>
-				<Form.Button 
-					basic size='mini' 
-					color='olive' 
-					content='save message'
-					type='Submit'
-				/>
-				
-			</Form>
-
+			<Grid.Row >
+				<Form size='mini' onSubmit={handleMessageSubmit} >
+					<Form.Input inline
+						label='message'
+						control='input'
+						placeholder='type your message here...'
+						value={message}
+						onChange={e => setMessage(e.target.value)}
+					/>
+					<Form.Button 
+						basic size='mini' 
+						color='olive' 
+						content='save message'
+						type='Submit'
+					/>
+					
+				</Form>
+			</Grid.Row>
 			<Button basic color="green" onClick={savePcardData}>
 				<Icon name="save outline" color="green"/> Save
 			</Button>
