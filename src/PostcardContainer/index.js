@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Konva from 'konva';
-import { Segment, Button, Icon, Accordion, Form, Grid } from 'semantic-ui-react';
+import { Segment, Button, Icon, Form } from 'semantic-ui-react';
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
 import { FreeLine } from "./FreeLine";
@@ -56,32 +56,11 @@ function PostcardContainer() {
 		forceUpdate();
 	};
 	
-	const messageForm = [
-		{
-			key: 'message',
-			title: 'message',
-			content: {
-				as: Form.Input,
-				label: '',
-				placeholder: 'message'
-			}
-		}
-	]
-	
-	// let pCardMessage = 'test'
-
-	// const handleChange = (e) => {
-	// 	e.preventDefault()
-	// }
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		alert(`Changed Message to ${message}` )
 	}
-
-	// const saveMessage = () => {
-	// 	console.log(pCardMessage);
-	// }
 
 	const savePcardData = async () => {
 

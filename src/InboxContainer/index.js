@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Header, Grid, Button, Card, Image, Icon } from 'semantic-ui-react'
+import { Segment, Header, Grid, Card, Image } from 'semantic-ui-react'
 
 const InboxContainer = (props) => {
 	//get the current user's postcards

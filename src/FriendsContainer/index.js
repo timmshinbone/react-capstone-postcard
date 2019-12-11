@@ -37,7 +37,7 @@ function FriendsContainer(props){
 	//accept friend
 	const acceptFriend = async (id) => {
 
-		console.log("this is id", id);
+		// console.log("this is id", id);
 		try{
 			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + id, {
 				method: 'PUT',
@@ -57,7 +57,7 @@ function FriendsContainer(props){
 	//deny friend
 	const denyFriend = async (id) => {
 
-		console.log("this is id", id);
+		// console.log("this is id", id);
 		try{
 			const url = await fetch(process.env.REACT_APP_API_URL + '/api/v1/friendships/' + id, {
 				method: 'PUT',
