@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Konva from 'konva';
-import { Segment, Button, Icon } from 'semantic-ui-react';
+import { Segment, Button, Icon, Accordion, Form, Grid } from 'semantic-ui-react';
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
 import { FreeLine } from "./FreeLine";
@@ -13,6 +13,7 @@ function PostcardContainer() {
 	const [, updateState] = React.useState();
 	const stageEl = React.createRef();
 	const layerEl = React.createRef();
+	const [message, setMessage] = useState("");
 
 	const addRectangle = () => {
 		const rect = {
@@ -54,15 +55,41 @@ function PostcardContainer() {
 		setShapes(shapes);
 		forceUpdate();
 	};
-	// const stage = stageEl.current.getStage()
-	const savePcardData = async () => {
-		console.log(stageEl)
-		const stageData = stageEl.current.toDataURL()
-		console.log(stageData);
+	
+	const messageForm = [
+		{
+			key: 'message',
+			title: 'message',
+			content: {
+				as: Form.Input,
+				label: '',
+				placeholder: 'message'
+			}
+		}
+	]
+	
+	// let pCardMessage = 'test'
 
+	// const handleChange = (e) => {
+	// 	e.preventDefault()
+	// }
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		alert(`Changed Message to ${message}` )
+	}
+
+	// const saveMessage = () => {
+	// 	console.log(pCardMessage);
+	// }
+
+	const savePcardData = async () => {
+
+		const stageData = stageEl.current.toDataURL()
+		// console.log(stageData);
 		const stageDataURL = {
 			drawing: stageData,
-			message: "test message"
+			message: message
 		}
 
 		const response = await fetch(process.env.REACT_APP_API_URL + '/api/v1/postcards/', {
@@ -130,6 +157,23 @@ function PostcardContainer() {
 				</Layer>
 			</Stage>
 			</Segment>
+			<Form size='mini' onSubmit={handleSubmit} >
+				<Form.Input inline
+					label='message'
+					control='input'
+					placeholder='type your message here...'
+					value={message}
+					onChange={e => setMessage(e.target.value)}
+				/>
+				<Form.Button 
+					basic size='mini' 
+					color='olive' 
+					content='save message'
+					type='Submit'
+				/>
+				
+			</Form>
+
 			<Button basic color="green" onClick={savePcardData}>
 				<Icon name="save outline" color="green"/> Save
 			</Button>
