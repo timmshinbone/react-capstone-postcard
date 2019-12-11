@@ -137,7 +137,7 @@ function PostcardContainer() {
 
 	const handleColorChange = (e, value) => {
 		setColor(value.value)
-		console.log(color);
+		
 	}
 
 	return(
