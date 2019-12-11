@@ -101,7 +101,7 @@ function PostcardContainer() {
 			}
 		})
 		const parsedPcardResponse = await response.json()
-		console.log(parsedPcardResponse);
+		// console.log(parsedPcardResponse);
 		
 	} 
 
