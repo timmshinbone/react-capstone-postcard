@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Konva from 'konva';
-import { Segment, Button, Icon, Form } from 'semantic-ui-react';
+import { Segment, Button, Icon, Form, Menu, Dropdown } from 'semantic-ui-react';
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
 import { FreeLine } from "./FreeLine";
@@ -14,6 +14,7 @@ function PostcardContainer() {
 	const stageEl = React.createRef();
 	const layerEl = React.createRef();
 	const [message, setMessage] = useState("");
+	const [color, setColor] = useState();
 
 	const addRectangle = () => {
 		const rect = {
@@ -21,7 +22,7 @@ function PostcardContainer() {
 			y: 150,
 			width: 100,
 			height: 100,
-			fill: "green",
+			fill: `${color}`,
 			id: `rect${rectangles.length + 1}`,
 		};
 		const rects = rectangles.concat([rect]);
@@ -57,7 +58,7 @@ function PostcardContainer() {
 	};
 	
 
-	const handleSubmit = (e) => {
+	const handleMessageSubmit = (e) => {
 		e.preventDefault()
 		alert(`Changed Message to ${message}` )
 	}
@@ -84,22 +85,48 @@ function PostcardContainer() {
 		
 	} 
 
-	// stage.toJSON()
+	const pickColors = [ 'red', 'orange', 'yellow', 'olive', 'green', 'teal',
+		'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black' ]
+	
+	const getColorOptions = () => {
+		return pickColors.map((c) => {
+			return ({
+				key: c,
+				text: c,
+				value: c
+			})
+		})
+	}
+
+	const handleColorChange = (e, value) => {
+		setColor(value.value)
+		console.log(color);
+	}
 
 	return(
 		<Segment className="postcard">
 			<Segment>
-			<p>drawing tools</p>
-			<Button basic color="blue" onClick={addRectangle}>
+			<span>
+				Color:  
+				<Dropdown 
+					inline
+					label='color'
+					options={getColorOptions()}
+					placeholder='pick a color'
+					closeOnChange
+					onChange={handleColorChange}
+				/>
+			</span><br/>
+			<Button size='mini' basic color="blue" onClick={addRectangle}>
 				<Icon name="square" color="blue"/>Rectangle
 			</Button>
-			<Button basic color="blue" onClick={drawLine}>
+			<Button size='mini' basic color="blue" onClick={drawLine}>
 				<Icon name="pencil alternate" color="blue"/>Draw
 			</Button>
-			<Button basic color="blue" onClick={eraseLine}>
+			<Button size='mini' basic color="blue" onClick={eraseLine}>
 				<Icon name="eraser" color="blue"/>Erase
 			</Button>
-			<Button basic color="red" onClick={undo}>
+			<Button size='mini' basic color="red" onClick={undo}>
 				<Icon name="undo alternate" color="red"/>Undo
 			</Button>
 			</Segment>
@@ -136,7 +163,7 @@ function PostcardContainer() {
 				</Layer>
 			</Stage>
 			</Segment>
-			<Form size='mini' onSubmit={handleSubmit} >
+			<Form size='mini' onSubmit={handleMessageSubmit} >
 				<Form.Input inline
 					label='message'
 					control='input'
