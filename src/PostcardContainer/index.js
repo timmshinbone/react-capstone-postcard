@@ -31,7 +31,7 @@ function PostcardContainer() {
 		const shs = shapes.concat([`rect${rectangles.length + 1}`]);
 		setShapes(shs);
 	};
-////////////////////TESTING FREELINE COLOR PICKER////////////////////////////////////
+
 	const FreeLine = (stage, layer, mode = "brush") => {
 		let isPaint = false;
 		let lastLine;
@@ -65,9 +65,6 @@ function PostcardContainer() {
 	};
 
 
-
-
-////////////////////////////////////////////////////////////////////////////////////
 	const drawLine = () => {
 		FreeLine(stageEl.current.getStage(), layerEl.current);
 	};
@@ -190,19 +187,19 @@ function PostcardContainer() {
 					closeOnChange
 					onChange={handleBrushSizeChange}
 				/>
+				<Button size='mini' basic color="blue" onClick={drawLine}>
+					<Icon size='small' name="pencil alternate" color="blue"/>draw
+				</Button>
+				<Button size="mini" basic color="blue" onClick={eraseLine}>
+					<Icon size="small" name="eraser" color="blue"/>erase
+				</Button>
 			</span>
 			<br/>
 			<Button size='mini' basic color="blue" onClick={addRectangle}>
 				<Icon name="square" color="blue"/>Rectangle
 			</Button>
-			<Button size='mini' basic color="blue" onClick={drawLine}>
-				<Icon name="pencil alternate" color="blue"/>Draw
-			</Button>
-			<Button size='mini' basic color="blue" onClick={eraseLine}>
-				<Icon name="eraser" color="blue"/>Erase
-			</Button>
 			<Button size='mini' basic color="red" onClick={undo}>
-				<Icon name="undo alternate" color="red"/>Undo
+				<Icon name="undo alternate" color="red"/>Undo Last Shape
 			</Button>
 			</Segment>
 			<Segment>
