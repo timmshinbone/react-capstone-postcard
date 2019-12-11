@@ -15,6 +15,7 @@ function PostcardContainer() {
 	const layerEl = React.createRef();
 	const [message, setMessage] = useState("");
 	const [color, setColor] = useState();
+	const [brushSize, setBrushSize] = useState();
 
 	const addRectangle = () => {
 		const rect = {
@@ -40,11 +41,10 @@ function PostcardContainer() {
 			let pos = stage.getPointerPosition();
 			lastLine = new Konva.Line({
 				stroke: mode === "brush" ? `${color}` : "white",
-				strokeWidth: mode === "brush" ? 3 : 15,
+				strokeWidth: mode === "brush" ? brushSize : brushSize,
 				globalCompositeOperation:
 					mode === "brush" ? "source-over" : "destination-out",
 				points: [pos.x, pos.y],
-				draggable: mode === "brush",
 			});
 			layer.add(lastLine);
 		});
@@ -137,7 +137,28 @@ function PostcardContainer() {
 
 	const handleColorChange = (e, value) => {
 		setColor(value.value)
-		
+	}
+
+	// const brushes = []
+
+	const getBrushSizeOptions = (end) => {
+		const brushes = []
+		for(let i = 1; i <= end; i++){
+			brushes.push(i)
+		}
+		return brushes.map((n) => {
+			return({
+				key: n,
+				text: n,
+				value: n
+			})
+		})
+	}
+
+
+
+	const handleBrushSizeChange = (e, value) => {
+		setBrushSize(value.value)
 	}
 
 	return(
@@ -147,13 +168,30 @@ function PostcardContainer() {
 				Color:  
 				<Dropdown 
 					inline
+					size='mini'
+					scrolling
 					label='color'
 					options={getColorOptions()}
 					placeholder='pick a color'
 					closeOnChange
 					onChange={handleColorChange}
 				/>
-			</span><br/>
+			</span>
+			<span>
+				Brush Size:  
+				<Dropdown 
+					inline
+					size='mini'
+					scrolling
+					label='brushSize'
+					defaultValue={1}
+					options={getBrushSizeOptions(50)}
+					placeholder='size'
+					closeOnChange
+					onChange={handleBrushSizeChange}
+				/>
+			</span>
+			<br/>
 			<Button size='mini' basic color="blue" onClick={addRectangle}>
 				<Icon name="square" color="blue"/>Rectangle
 			</Button>
