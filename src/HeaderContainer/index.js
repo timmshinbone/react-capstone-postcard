@@ -9,21 +9,13 @@ const HeaderContainer = (props) => {
 			<Segment>
 			<Grid.Row>
 				<Grid divided="vertically">
-					<Grid.Row columns={5} divided>
-						<Grid.Column width={1} />
-						<Grid.Column width={4} >
-							<Header.Content>{props.loggedInUsername}</Header.Content>
+					<Grid.Row columns={3} divided>
+						<Grid.Column width={3} />
+						<Grid.Column width={10} >
+							<Header.Content>Welcome, {props.loggedInUsername}</Header.Content><br/>
 							<Button size='mini' pointing='left' basic onClick={props.logout}>Log Out</Button>
 						</Grid.Column>
-						<Grid.Column width={5} >
-							<Button basic >POSTCARD</Button>
-							<Button basic >HISTORY</Button>
-						</Grid.Column>
-						<Grid.Column width={5} >
-							<Button basic >FRIENDS</Button>
-							<Button basic >INBOX</Button>
-						</Grid.Column>
-						<Grid.Column width={1} />
+						<Grid.Column width={3} />
 					</Grid.Row>
 				</Grid>
 			</Grid.Row>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Grid } from 'semantic-ui-react'
+import { Segment, Grid, Button } from 'semantic-ui-react'
 
 import PostcardContainer from '../PostcardContainer'
 import FriendsContainer from '../FriendsContainer'
@@ -115,7 +115,12 @@ class UserContainer extends Component {
 		// console.log(this.state.transactions, "<--this is transactions");
 		return(
 			<Segment>
-				<h1>This is the current user's home screen</h1>
+				<Grid.Row>
+					<Button basic >POSTCARD</Button>
+					<Button basic >HISTORY</Button>
+					<Button basic >FRIENDS</Button>
+					<Button basic >INBOX</Button>
+				</Grid.Row>
 				<PostcardContainer/>
 				{this.state.friendships.length > 0 ?
 					<FriendsContainer
