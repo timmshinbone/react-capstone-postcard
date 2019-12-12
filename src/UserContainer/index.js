@@ -166,8 +166,15 @@ class UserContainer extends Component {
 								/>
 							</Segment>
 						:
-							<h1>waiting for friends</h1>
-						
+							<Segment>
+								<h1>Add some friends</h1>
+								<ViewUsersList
+										users={this.state.users}
+										loggedInUsername={this.props.loggedInUsername}
+										currentUser={this.props.currentUser}
+										friends={this.state.friendships}
+									/>
+							</Segment>
 					:
 					null
 				}
@@ -193,7 +200,7 @@ class UserContainer extends Component {
 					:
 					null
 				}
-				
+
 			</Segment>
 		)
 	}

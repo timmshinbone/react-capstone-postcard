@@ -94,7 +94,7 @@ function PostcardContainer() {
 
 	const handleMessageSubmit = (e) => {
 		e.preventDefault()
-		alert(`Changed Message to ${message}` )
+		
 	}
 
 	const savePcardData = async () => {

@@ -89,6 +89,20 @@ class HistoryContainer extends Component {
 		}
 	}
 
+	deletePostcard = async(postcard) => {
+		console.log(postcard)
+		const deletePostcardResponse = await fetch(process.env.REACT_APP_API_URL + '/api/v1/postcards/' + postcard, {
+			method: 'DELETE',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		const deletePcardParsed = await deletePostcardResponse.json();
+		console.log(deletePcardParsed);
+		this.setState({userPcards: this.state.userPCards.filter((pCard => pCard.id !== postcard))})
+		}
+
 	showPcards(props){
 		return this.state.userPCards.map(pCard => {
 			return(
@@ -101,7 +115,7 @@ class HistoryContainer extends Component {
 							<Card.Description>
 	       						{pCard.message}
 	      					</Card.Description>
-	      					<Button basic color="blue" onClick={() => this.sendPostCard(pCard.id, this.state.receiver)}>
+	      					<Button size='mini' basic color="blue" onClick={() => this.sendPostCard(pCard.id, this.state.receiver)}>
 								<Icon name="paper plane outline" color="blue" key={pCard.id}/> Send
 							</Button>
 							<span>
@@ -114,6 +128,9 @@ class HistoryContainer extends Component {
 								onChange={this.handleChange}
 							/>
 							</span>
+							<Button size='mini' basic color="red" onClick={() => this.deletePostcard(pCard.id)}>
+								<Icon name='trash alternate outline' color="red" key={pCard.id}/>
+							</Button>
 	    				</Card.Content>
 					</Card>
 				</Grid>
