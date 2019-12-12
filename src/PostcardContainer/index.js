@@ -32,21 +32,68 @@ function PostcardContainer() {
 		setShapes(shs);
 	};
 
-	const FreeLine = (stage, layer, mode = "brush") => {
-		let isPaint = false;
-		let lastLine;
+	// const FreeLine = (stage, layer, mode = "brush") => {
+	// 	let isPaint = false;
+	// 	let lastLine;
 
-		stage.on("mousedown touchstart", function(e) {
+	// 	stage.on("mousedown touchstart", function(e) {
+	// 		isPaint = true;
+	// 		let pos = stage.getPointerPosition();
+	// 		lastLine = new Konva.Line({
+	// 			stroke: mode === "brush" ? `${color}` : "white",
+	// 			strokeWidth: mode === "brush" ? brushSize : brushSize,
+	// 			globalCompositeOperation:
+	// 				mode === "brush" ? "source-over" : "destination-out",
+	// 			points: [pos.x, pos.y],
+	// 		});
+	// 		layer.add(lastLine);
+	// 	});
+
+	// 	stage.on("mouseup touchend", function() {
+	// 		isPaint = false;
+	// 	});
+
+	// 	stage.on("mousemove touchmove", function() {
+	// 		if(!isPaint) {
+	// 			return;
+	// 		}
+	// 		const pos = stage.getPointerPosition();
+	// 			let newPoints = lastLine.points().concat([pos.x, pos.y]);
+	// 			lastLine.points(newPoints);
+	// 			layer.batchDraw();
+	// 	});
+	// };
+////////////////NEW LINE TYPE TEST///////////////////////////////
+
+	const newLine = (stage, layer, mode = "brush") => {
+		const canvas = document.createElement('canvas');
+			canvas.width = stage.width();
+			canvas.height = stage.height();
+
+		const image = new Konva.Image({
+			image: canvas,
+			x: 0,
+			y: 0
+		});
+		layer.add(image);
+		stage.draw();
+
+		const context = canvas.getContext('2d');
+		context.strokeStyle = `${color}`;
+		context.lineJoin = 'round';
+		context.lineWidth = brushSize;
+
+			
+		let isPaint = false;
+		let lastPointerPosition;
+		
+
+		image.on("mousedown touchstart", function(e) {
 			isPaint = true;
-			let pos = stage.getPointerPosition();
-			lastLine = new Konva.Line({
-				stroke: mode === "brush" ? `${color}` : "white",
-				strokeWidth: mode === "brush" ? brushSize : brushSize,
-				globalCompositeOperation:
-					mode === "brush" ? "source-over" : "destination-out",
-				points: [pos.x, pos.y],
-			});
-			layer.add(lastLine);
+			let lastPointerPosition = stage.getPointerPosition();
+			console.log(lastPointerPosition);
+			console.log(`${color}`);
+			console.log(brushSize);
 		});
 
 		stage.on("mouseup touchend", function() {
@@ -54,24 +101,55 @@ function PostcardContainer() {
 		});
 
 		stage.on("mousemove touchmove", function() {
+
 			if(!isPaint) {
 				return;
 			}
-			const pos = stage.getPointerPosition();
-				let newPoints = lastLine.points().concat([pos.x, pos.y]);
-				lastLine.points(newPoints);
-				layer.batchDraw();
-		});
-	};
+			if(mode === 'brush'){
+				context.globalCompositeOperation = 'source-over';
+			}
 
+			if(mode === 'eraser'){
+				context.globalCompositeOperation = 'destination-out';
+			}
+			context.beginPath();
+
+			let pos = stage.getPointerPosition();
+			lastPointerPosition = pos;
+
+			let localPos = {
+				x: lastPointerPosition.x - image.x(),
+				y: lastPointerPosition.y - image.y()
+			};
+			context.moveTo(localPos.x, localPos.y);
+			localPos = {
+				x: pos.x - image.x(),
+				y: pos.y - image.y()
+			};
+			context.lineTo(localPos.x, localPos.y);
+			context.closePath();
+			context.stroke();
+
+			layer.batchDraw();
+		});
+
+	}
 
 	const drawLine = () => {
-		FreeLine(stageEl.current.getStage(), layerEl.current);
+		newLine(stageEl.current.getStage(), layerEl.current);
 	};
 
 	const eraseLine = () => {
-		FreeLine(stageEl.current.getStage(), layerEl.current, "erase");
+		newLine(stageEl.current.getStage(), layerEl.current, "erase");
 	}
+////////////////////////////////////////////////////////////
+	// const drawLine = () => {
+	// 	FreeLine(stageEl.current.getStage(), layerEl.current);
+	// };
+
+	// const eraseLine = () => {
+	// 	FreeLine(stageEl.current.getStage(), layerEl.current, "erase");
+	// }
 
 	//place all other shape + drawing components here
 	const forceUpdate = React.useCallback(() => updateState({}), []);
