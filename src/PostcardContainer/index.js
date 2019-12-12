@@ -33,21 +33,21 @@ function PostcardContainer() {
 		const shs = shapes.concat([`rect${rectangles.length + 1}`]);
 		setShapes(shs);
 	};
-	// const addCircle = () => {
-	// 	const circ = {
-	// 		x: 100,
-	// 		y: 100,
-	// 		width: 100,
-	// 		height: 100,
-	// 		radius: 70,
-	// 		fill: `${color}`,
-	// 		id: `circ${circles.length + 1}`,
-	// 	};
-	// 	const circs = circles.concat([circ]);
-	// 	setCircles(circs);
-	// 	const shs = shapes.concat([`circ${circles.length + 1}`]);
-	// 	setShapes(shs);
-	// };
+	const addCircle = () => {
+		const circ = {
+			x: 100,
+			y: 100,
+			width: 100,
+			height: 100,
+			radius: 70,
+			fill: `${color}`,
+			id: `circ${circles.length + 1}`,
+		};
+		const circs = circles.concat([circ]);
+		setCircles(circs);
+		const shs = shapes.concat([`circ${circles.length + 1}`]);
+		setShapes(shs);
+	};
 
 	const FreeLine = (stage, layer, mode = "brush") => {
 		let isPaint = false;
@@ -102,11 +102,11 @@ function PostcardContainer() {
 			setRectangles(rectangles);
 		}
 
-		// index = circles.findIndex(c => c.id === lastId);
-		// if(index !== -1) {
-		// 	circles.splice(index, 1);
-		// 	setCircles(circles);
-		// }
+		index = circles.findIndex(c => c.id === lastId);
+		if(index !== -1) {
+			circles.splice(index, 1);
+			setCircles(circles);
+		}
 		//place undos for other shapes above this
 		shapes.pop();
 		setShapes(shapes);
@@ -220,6 +220,9 @@ function PostcardContainer() {
 			<Button size='mini' basic color="blue" onClick={addRectangle}>
 				<Icon name="square" color="blue"/>
 			</Button>
+			<Button size='mini' basic color="blue" onClick={addCircle}>
+				<Icon name="circle" color="blue"/>
+			</Button>
 			<Button size='mini' basic color="red" onClick={undo}>
 				<Icon name="undo alternate" color="red"/>Undo Last Shape
 			</Button>
@@ -254,6 +257,23 @@ function PostcardContainer() {
 							/>
 						)
 					})}
+					{circles.map((circle, i) => {
+						return(
+							<Circ
+								key={i}
+								shapeProps={circle}
+								isSelected={circle.id === selectedId}
+								onSelect={() => {
+									selectShape(circle.id);
+								}}
+								onChange={newAttrs => {
+									const circs = circles.slice();
+									circs[i] = newAttrs;
+									setCircles(circs);
+								}}
+							/>
+						);
+					})}					
 				</Layer>
 			</Stage>
 			</Segment>
