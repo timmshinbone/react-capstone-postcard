@@ -3,10 +3,12 @@ import Konva from 'konva';
 import { Segment, Button, Icon, Form, Menu, Dropdown, Grid } from 'semantic-ui-react';
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "./Rectangle";
+import Circ from "./Circle";
 // import { FreeLine } from "./FreeLine";
 
 function PostcardContainer() {
 	const [rectangles, setRectangles] = useState([]);
+	const [circles, setCircles] = useState([]);
 	//set other shapes + line drawing above this
 	const [selectedId, selectShape] = useState(null);
 	const [shapes, setShapes] = useState([]);
@@ -31,6 +33,21 @@ function PostcardContainer() {
 		const shs = shapes.concat([`rect${rectangles.length + 1}`]);
 		setShapes(shs);
 	};
+	// const addCircle = () => {
+	// 	const circ = {
+	// 		x: 100,
+	// 		y: 100,
+	// 		width: 100,
+	// 		height: 100,
+	// 		radius: 70,
+	// 		fill: `${color}`,
+	// 		id: `circ${circles.length + 1}`,
+	// 	};
+	// 	const circs = circles.concat([circ]);
+	// 	setCircles(circs);
+	// 	const shs = shapes.concat([`circ${circles.length + 1}`]);
+	// 	setShapes(shs);
+	// };
 
 	const FreeLine = (stage, layer, mode = "brush") => {
 		let isPaint = false;
@@ -85,6 +102,11 @@ function PostcardContainer() {
 			setRectangles(rectangles);
 		}
 
+		// index = circles.findIndex(c => c.id === lastId);
+		// if(index !== -1) {
+		// 	circles.splice(index, 1);
+		// 	setCircles(circles);
+		// }
 		//place undos for other shapes above this
 		shapes.pop();
 		setShapes(shapes);
@@ -188,15 +210,15 @@ function PostcardContainer() {
 					onChange={handleBrushSizeChange}
 				/>
 				<Button size='mini' basic color="orange" onClick={drawLine}>
-					<Icon size='small' name="pencil alternate" color="blue"/>draw
+					<Icon size='small' name="pencil alternate" color="orange"/>draw
 				</Button>
 				<Button size="mini" basic color="orange" onClick={eraseLine}>
-					<Icon size="small" name="eraser" color="blue"/>erase
+					<Icon size="small" name="eraser" color="orange"/>erase
 				</Button>
 			</span>
 			<br/>
 			<Button size='mini' basic color="blue" onClick={addRectangle}>
-				<Icon name="square" color="blue"/>Rectangle
+				<Icon name="square" color="blue"/>
 			</Button>
 			<Button size='mini' basic color="red" onClick={undo}>
 				<Icon name="undo alternate" color="red"/>Undo Last Shape
